@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import StarWarsContext from './context/StarWarsContext';
+import Table from './components/Table';
 
 function App() {
-  // Iniciando projeto
+  const [planets, setPlanets] = useState([]);
   return (
-    <span>Hello, App!</span>
+    <StarWarsContext.Provider value={ { planets, setPlanets } }>
+      <Table />
+    </StarWarsContext.Provider>
   );
 }
 
