@@ -5,8 +5,9 @@ import Table from './components/Table';
 
 function App() {
   const [planets, setPlanets] = useState([]);
+  const [filter, setFilter] = useState('');
   return (
-    <StarWarsContext.Provider value={ { planets, setPlanets } }>
+    <StarWarsContext.Provider value={ { planets, setPlanets, filter, setFilter } }>
       <Table />
     </StarWarsContext.Provider>
   );

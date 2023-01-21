@@ -1,13 +1,18 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import FetchAPi from '../services/FetchApi';
+import FilterName from './FilterName';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
+  const { planets, filter } = useContext(StarWarsContext);
 
+  const filterPlanets = planets.filter(
+    (planet) => planet.name.toLowerCase().includes(filter.toLowerCase()),
+  );
   return (
     <>
       <FetchAPi />
+      <FilterName />
       <table>
         <thead>
           <tr>
@@ -27,7 +32,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet) => (
+          {filterPlanets.map((planet) => (
             <tr key={ planet.name }>
               <td>
                 {' '}
