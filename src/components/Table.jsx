@@ -1,18 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import FetchAPi from '../services/FetchApi';
 import FilterName from './FilterName';
+import FilterNumbers from './FilterNumbers';
 
 function Table() {
-  const { planets, filter } = useContext(StarWarsContext);
+  const { planets, filter, column,
+    compare, value, filteredPlanets, setFilteredPlanets } = useContext(StarWarsContext);
 
-  const filterPlanets = planets.filter(
-    (planet) => planet.name.toLowerCase().includes(filter.toLowerCase()),
-  );
+  useEffect(() => {
+    if (planets.length > 0) {
+      setFilteredPlanets(
+        filter
+          ? planets.filter((planet) => planet.name.toLowerCase()
+            .includes(filter.toLowerCase()))
+          : planets,
+      );
+    }
+  }, [filter, planets, setFilteredPlanets]);
+
+  const handleClick = () => {
+    let filteredData = [...planets];
+    if (column && compare && value) {
+      const newValue = Number(value);
+      if (compare === 'maior que') {
+        filteredData = filteredData.filter((planet) => planet[column] > newValue);
+      } else if (compare === 'menor que') {
+        filteredData = filteredData.filter((planet) => planet[column] < newValue);
+      } else if (compare === 'igual a') {
+        filteredData = filteredData
+          .filter((planet) => Number(planet[column]) === newValue);
+      }
+    }
+    setFilteredPlanets(filteredData);
+  };
+
   return (
     <>
       <FetchAPi />
       <FilterName />
+      <FilterNumbers onClick={ handleClick } />
       <table>
         <thead>
           <tr>
@@ -32,7 +59,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterPlanets.map((planet) => (
+          {filteredPlanets.map((planet) => (
             <tr key={ planet.name }>
               <td>
                 {' '}
