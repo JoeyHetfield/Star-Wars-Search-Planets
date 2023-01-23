@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterNumbers({ onClick }) {
-  const { setColumn, setCompare, value, setValue } = useContext(StarWarsContext);
+  const { setColumn, setCompare, value, setValue,
+    arrayColumns } = useContext(StarWarsContext);
 
   return (
     <div>
@@ -11,11 +12,10 @@ function FilterNumbers({ onClick }) {
         data-testid="column-filter"
         onChange={ (event) => setColumn(event.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { arrayColumns.map((column) => (
+          <option key={ column } value={ column }>
+            { column }
+          </option>)) }
       </select>
       <select
         data-testid="comparison-filter"

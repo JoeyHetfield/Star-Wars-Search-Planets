@@ -11,6 +11,9 @@ function App() {
   const [compare, setCompare] = useState('maior que');
   const [value, setValue] = useState('0');
   const [filteredPlanets, setFilteredPlanets] = useState(planets);
+  const [usedColumns, setUsedColumns] = useState([]);
+  const [arrayColumns, setArrayColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   return (
     <StarWarsContext.Provider
@@ -28,6 +31,10 @@ function App() {
         setValue,
         filteredPlanets,
         setFilteredPlanets,
+        usedColumns,
+        setUsedColumns,
+        arrayColumns,
+        setArrayColumns,
       } }
     >
       <Table />

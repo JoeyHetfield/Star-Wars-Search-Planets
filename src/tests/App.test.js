@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import mockAPi from './mockApi';
@@ -15,8 +15,14 @@ describe('Testar A aplicação', () => {
       const textBox = screen.getByRole('textbox');
       expect(textBox).toBeInTheDocument();
 
-      const numberInput = screen.getByRole('spinbutton');
-      expect(numberInput).toBeInTheDocument();
+      const valueInput = screen.getByRole('spinbutton');
+      expect(valueInput).toBeInTheDocument();
+
+      const column = screen.getByTestId('column-filter')
+      const compare = screen.getByTestId('comparison-filter')
+
+      expect(column).toBeInTheDocument();
+      expect(compare).toBeInTheDocument();
   });
   test('Testar se o botão existe', () => {
     render(<App />);
@@ -67,26 +73,25 @@ describe('Testar A aplicação', () => {
 
     expect(surface).toBeInTheDocument();
   })
-   test('Se o filtro por nome funciona', async () => {
+   test('Se o filtro por nome e número funcionam', async () => {
     render(<App />);
 
     const textBox = screen.getByRole('textbox');
-     userEvent.type(textBox, 'Ta');
+    const column = screen.getByTestId('column-filter')
+    const compare = screen.getByTestId('comparison-filter')
+    const valueInput = screen.getByRole('spinbutton')
+    const btn = screen.getByTestId('button-filter');
+
+    userEvent.selectOptions(column, ['rotation_period'])
+    userEvent.selectOptions(compare, 'igual a')
+    userEvent.type(valueInput, '23')
+    userEvent.click(btn)
+
+
+    userEvent.type(textBox, 'Ta');
 
 
      const tatooineElements = await screen.findByText(/tatooine/i);
-     expect(tatooineElements).toBeInTheDocument();
- })
-    test('Se o filtro por número funciona', async () => {
-    render(<App />);
-
-     const valueInput = screen.getByRole('spinbutton')
-     userEvent.type(valueInput, '5000000000');
-     
-     const btn = screen.getByTestId('button-filter');
-     userEvent.click(btn) 
-
-     const tatooineElements = await screen.findByText(/Coruscant/i);
      expect(tatooineElements).toBeInTheDocument();
  })
 })

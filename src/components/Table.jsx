@@ -6,7 +6,8 @@ import FilterNumbers from './FilterNumbers';
 
 function Table() {
   const { planets, filter, column,
-    compare, value, filteredPlanets, setFilteredPlanets } = useContext(StarWarsContext);
+    compare, value, filteredPlanets, setFilteredPlanets,
+    setArrayColumns, arrayColumns, setColumn } = useContext(StarWarsContext);
 
   useEffect(() => {
     if (planets.length > 0) {
@@ -22,6 +23,9 @@ function Table() {
   const handleClick = () => {
     let filteredData = [...filteredPlanets];
     if (column && compare && value) {
+      const newFilterColumns = arrayColumns.filter((columnnn) => column !== columnnn);
+      setArrayColumns([...newFilterColumns]);
+      setColumn(newFilterColumns[0]);
       const newValue = Number(value);
       if (compare === 'maior que') {
         filteredData = filteredData.filter((planet) => planet[column] > newValue);
