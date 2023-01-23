@@ -1,12 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-
-jest.mock('../services/FetchApi', () => {
-  return jest.fn(() => 'mocked function')
-})
+import mockAPi from './mockApi';
 
 describe('Testar A aplicação', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockAPi)
+});
+
+  })
   test('Testar se os inputs existem', () => {
     render(<App />);
       const textBox = screen.getByRole('textbox');
@@ -64,16 +67,28 @@ describe('Testar A aplicação', () => {
 
     expect(surface).toBeInTheDocument();
   })
-  // test('Se o filtro por nome funciona', () => {
-  //   render(<App />);
+   test('Se o filtro por nome funciona', async () => {
+    render(<App />);
 
-  //   const textBox = screen.getByRole('textbox');
-  //   userEvent.type(textBox, 'Ta');
+    const textBox = screen.getByRole('textbox');
+     userEvent.type(textBox, 'Ta');
 
 
-  //   const tatooineElements = screen.queryAllByText(/tatooine/i);
-  //   expect(tatooineElements).toHaveLength(2);
-    
-  // })
+     const tatooineElements = await screen.findByText(/tatooine/i);
+     expect(tatooineElements).toBeInTheDocument();
+ })
+    test('Se o filtro por número funciona', async () => {
+    render(<App />);
 
+     const valueInput = screen.getByRole('spinbutton')
+     userEvent.type(valueInput, '5000000000');
+     
+     const btn = screen.getByTestId('button-filter');
+     userEvent.click(btn) 
+
+     const tatooineElements = await screen.findByText(/Coruscant/i);
+     expect(tatooineElements).toBeInTheDocument();
+ })
 })
+
+

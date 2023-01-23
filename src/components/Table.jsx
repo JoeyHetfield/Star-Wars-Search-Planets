@@ -20,7 +20,7 @@ function Table() {
   }, [filter, planets, setFilteredPlanets]);
 
   const handleClick = () => {
-    let filteredData = [...planets];
+    let filteredData = [...filteredPlanets];
     if (column && compare && value) {
       const newValue = Number(value);
       if (compare === 'maior que') {

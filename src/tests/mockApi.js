@@ -1,4 +1,4 @@
-const mockAPi = [
+const mockAPi = 
 {
   results: [
       {
@@ -186,6 +186,5 @@ const mockAPi = [
       }
   ]
 }
-]
 
 export default mockAPi;
