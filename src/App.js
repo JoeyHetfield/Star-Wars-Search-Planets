@@ -14,6 +14,8 @@ function App() {
   const [usedColumns, setUsedColumns] = useState([]);
   const [arrayColumns, setArrayColumns] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+  const [newColumn, setNewColumn] = useState('population');
+  const [newCompare, setNewCompare] = useState('ASC');
 
   return (
     <StarWarsContext.Provider
@@ -35,6 +37,10 @@ function App() {
         setUsedColumns,
         arrayColumns,
         setArrayColumns,
+        newColumn,
+        setNewColumn,
+        newCompare,
+        setNewCompare,
       } }
     >
       <Table />

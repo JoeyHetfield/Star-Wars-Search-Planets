@@ -94,6 +94,26 @@ describe('Testar A aplicação', () => {
      const tatooineElements = await screen.findByText(/tatooine/i);
      expect(tatooineElements).toBeInTheDocument();
  })
+
+ test('Se os novos elementos de ASC e Desc funcionam', () => {
+  render(<App />);
+ const orderText = screen.getByText(/ordernar:/i);
+ const columnOrder = screen.getByText(/ordernar:/i);;
+ const asc = screen.getByText(/ascendente/i); 
+ const desc = screen.getByText(/descendente/i);
+ const orderBtn = screen.getByRole('button', {
+  name: /ordenar/i
+});
+
+expect(orderText).toBeInTheDocument();
+expect(columnOrder).toBeInTheDocument();
+expect(asc).toBeInTheDocument();
+expect(desc).toBeInTheDocument();
+expect(orderBtn).toBeInTheDocument();
+
+
+
+ })
 })
 
 

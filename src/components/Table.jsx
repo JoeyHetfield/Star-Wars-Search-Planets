@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import FetchAPi from '../services/FetchApi';
 import FilterName from './FilterName';
 import FilterNumbers from './FilterNumbers';
+import SortFilters from './SortFilters';
 
 function Table() {
   const { planets, filter, column,
@@ -44,6 +45,7 @@ function Table() {
       <FetchAPi />
       <FilterName />
       <FilterNumbers onClick={ handleClick } />
+      <SortFilters />
       <table>
         <thead>
           <tr>
@@ -64,59 +66,47 @@ function Table() {
         </thead>
         <tbody>
           {filteredPlanets.map((planet) => (
-            <tr key={ planet.name }>
-              <td>
-                {' '}
+            <tr
+              key={ planet.name }
+            >
+              <td data-testid="planet-name">
                 { planet.name }
-                {' '}
               </td>
               <td>
                 { planet.rotation_period }
-                {' '}
               </td>
               <td>
                 { planet.orbital_period }
-                {' '}
               </td>
               <td>
                 { planet.diameter }
-                {' '}
               </td>
               <td>
-                {' '}
                 { planet.climate }
               </td>
               <td>
                 { planet.gravity }
-                {' '}
               </td>
               <td>
                 { planet.terrain }
-                {' '}
               </td>
               <td>
                 { planet.surface_water }
-                {' '}
               </td>
               <td>
                 { planet.population }
-                {' '}
               </td>
               <td>
                 { planet.films }
-                {' '}
               </td>
               <td>
                 { planet.created }
-                {' '}
               </td>
               <td>
                 { planet.edited }
-                {' '}
               </td>
               <td>
                 { planet.url }
-                {' '}
               </td>
             </tr>
           ))}
