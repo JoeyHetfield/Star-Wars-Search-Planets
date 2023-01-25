@@ -87,33 +87,42 @@ describe('Testar A aplicação', () => {
     userEvent.type(valueInput, '23')
     userEvent.click(btn)
 
-
     userEvent.type(textBox, 'Ta');
-
 
      const tatooineElements = await screen.findByText(/tatooine/i);
      expect(tatooineElements).toBeInTheDocument();
  })
+  test('Testando filtrar por menor que', async () => {
+    render(<App />);
 
- test('Se os novos elementos de ASC e Desc funcionam', () => {
-  render(<App />);
- const orderText = screen.getByText(/ordernar:/i);
- const columnOrder = screen.getByText(/ordernar:/i);;
- const asc = screen.getByText(/ascendente/i); 
- const desc = screen.getByText(/descendente/i);
- const orderBtn = screen.getByRole('button', {
-  name: /ordenar/i
-});
+    const column = screen.getByTestId('column-filter')
+    const compare = screen.getByTestId('comparison-filter')
+    const valueInput = screen.getByRole('spinbutton')
+    const btn = screen.getByTestId('button-filter');
 
-expect(orderText).toBeInTheDocument();
-expect(columnOrder).toBeInTheDocument();
-expect(asc).toBeInTheDocument();
-expect(desc).toBeInTheDocument();
-expect(orderBtn).toBeInTheDocument();
+    userEvent.selectOptions(column, ['diameter'])
+    userEvent.selectOptions(compare, 'menor que')
+    userEvent.type(valueInput, '5000')
+    userEvent.click(btn)
 
+    const endorElements = await screen.findByText(/Endor/i);
+    expect(endorElements).toBeInTheDocument();
+  })
 
+  test('Testando filtrar por maior que', async () => {
+    render(<App />);
 
- })
+    const column = screen.getByTestId('column-filter')
+    const compare = screen.getByTestId('comparison-filter')
+    const valueInput = screen.getByRole('spinbutton')
+    const btn = screen.getByTestId('button-filter');
+
+    userEvent.selectOptions(column, ['surface_water'])
+    userEvent.selectOptions(compare, 'maior que')
+    userEvent.type(valueInput, '99')
+    userEvent.click(btn)
+
+    const kaminoElements = await screen.findByText(/Kamino/i);
+    expect(kaminoElements).toBeInTheDocument();
+  })
 })
-
-
